@@ -43,16 +43,19 @@ public class RedditAuthorizationActivity extends AppCompatActivity {
     webView.loadUrl(url);
     webView.setWebViewClient(new WebViewClient() {
       boolean isCodeReceived = false;
+
       @Override
       public boolean shouldOverrideUrlLoading(WebView view, String url) {
         Log.i(LOG_TAG, "shouldOverrideUrlLoading, url: " + url);
         return false;
       }
+
       @Override
       public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
         Log.i(LOG_TAG, "onPageStarted, url: " + url);
       }
+
       @Override
       public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
@@ -60,7 +63,7 @@ public class RedditAuthorizationActivity extends AppCompatActivity {
 
         if (isCodeReceived) return;
         Uri uri = Uri.parse(url);
-        String code =  uri.getQueryParameter("code");
+        String code = uri.getQueryParameter("code");
         String error = uri.getQueryParameter("error");
         boolean canCloseDialog = false;
         int activityResultCode = RESULT_CANCELED;

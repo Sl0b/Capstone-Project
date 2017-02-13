@@ -128,9 +128,11 @@ public class LinkWithCommentsActivity extends AppCompatActivity implements
             setShareIntent(sendIntent);
           }
         }
+
         @Override
         public void onPageSelected(int position) {
         }
+
         @Override
         public void onPageScrollStateChanged(int state) {
         }
@@ -158,7 +160,7 @@ public class LinkWithCommentsActivity extends AppCompatActivity implements
     return mCursorLinks.getString(COL_URL);
   }
 
-  public void onLinkClick (View view) {
+  public void onLinkClick(View view) {
     if (mCursorLinks == null || mCursorLinks.isClosed() ||
         !mCursorLinks.moveToPosition(mViewPager.getCurrentItem()))
       return;
@@ -360,6 +362,7 @@ public class LinkWithCommentsActivity extends AppCompatActivity implements
             @Override
             public void onSuccess(JSONObject response) {
             }
+
             public void onSuccess(JSONArray response) {
               try {
                 SpannableStringBuilder text = new SpannableStringBuilder();
@@ -376,9 +379,11 @@ public class LinkWithCommentsActivity extends AppCompatActivity implements
                 e.printStackTrace();
               }
             }
+
             @Override
             public void onFailure(int errorCode) {
             }
+
             private CharSequence getComment(int level, JSONObject comment) {
               SpannableStringBuilder text = new SpannableStringBuilder();
               try {
@@ -426,6 +431,7 @@ public class LinkWithCommentsActivity extends AppCompatActivity implements
       return rootView;
     }
   }
+
   /**
    * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
    * one of the sections/tabs/pages.
@@ -435,6 +441,7 @@ public class LinkWithCommentsActivity extends AppCompatActivity implements
     public SectionsPagerAdapter(FragmentManager fm) {
       super(fm);
     }
+
     @Override
     public Fragment getItem(int position) {
       // getItem is called to instantiate the fragment for the given page.
@@ -442,14 +449,17 @@ public class LinkWithCommentsActivity extends AppCompatActivity implements
       return PlaceholderFragment.newInstance(position, getIntent().getExtras(), mCursorLinks,
           LinkWithCommentsActivity.this);
     }
+
     @Override
     public int getCount() {
       return mLinkCount;
     }
+
     @Override
     public CharSequence getPageTitle(int position) {
       return null;
     }
+
     public int getItemPosition(Object object) {
       return POSITION_NONE;
     }

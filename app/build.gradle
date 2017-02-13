@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'sl0b_udacity'
             keyPassword 'testpass'
-            storeFile file('$rootDir/keystore.jks')
+            storeFile file("$rootDir/keystore.jks")
             storePassword 'testpass'
         }
     }

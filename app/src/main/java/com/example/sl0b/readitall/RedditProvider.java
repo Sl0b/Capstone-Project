@@ -103,7 +103,7 @@ public class RedditProvider extends ContentProvider {
     Cursor retCursor;
     switch (sUriMatcher.match(uri)) {
       case USER: {
-        retCursor = db.query( UserEntry.TABLE_NAME, projection,
+        retCursor = db.query(UserEntry.TABLE_NAME, projection,
             selection, selectionArgs, /*groupBy*/ null, /*having*/ null, sortOrder);
         break;
       }
@@ -138,7 +138,7 @@ public class RedditProvider extends ContentProvider {
         break;
       }
       case ANONYM_SUBSCRIPTION: {
-        retCursor = db.query( AnonymSubscrEntry.TABLE_NAME, projection,
+        retCursor = db.query(AnonymSubscrEntry.TABLE_NAME, projection,
             selection, selectionArgs, /*groupBy*/ null, /*having*/ null, sortOrder);
         break;
       }
@@ -249,8 +249,7 @@ public class RedditProvider extends ContentProvider {
               "from links as lm where lm.subreddit = '" + lastPathSegment +
               "' order by pos asc";
           retCursor = db.rawQuery(query, null);
-        }
-        else {
+        } else {
           retCursor = db.query(LinkEntry.TABLE_NAME, projection,
               selection, selectionArgs, /*groupBy*/ null, /*having*/ null, sortOrder);
         }
@@ -360,7 +359,7 @@ public class RedditProvider extends ContentProvider {
     boolean notifySubredditSearchEntry = false;
     boolean notifyLinkEntry = false;
     // have DB engine to delete all rows and to return number of rows deleted
-    if ( null == selection ) selection = "1";
+    if (null == selection) selection = "1";
     switch (sUriMatcher.match(uri)) {
       case USER: {
         rowsDeleted = db.delete(UserEntry.TABLE_NAME,

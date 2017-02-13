@@ -57,7 +57,7 @@ public class RedditRestClient {
     RANDOM
   }
 
-  public RedditRestClient(Context c){
+  public RedditRestClient(Context c) {
     mContext = c;
   }
 
@@ -66,6 +66,7 @@ public class RedditRestClient {
     mHttp.get(mContext, getAbsoluteUrl(isOauthUrl, url) + ".json", headers, params,
         responseHandler);
   }
+
   public void post(boolean isOauthUrl, String url, Header[] headers, RequestParams params,
                    AsyncHttpResponseHandler responseHandler) {
     mHttp.post(mContext, getAbsoluteUrl(isOauthUrl, url), headers, params, null,
@@ -82,12 +83,15 @@ public class RedditRestClient {
 
   interface JsonResultHandler {
     void onSuccess(JSONObject response);
+
     void onSuccess(JSONArray response);
+
     void onFailure(int errorCode);
   }
 
   public interface ResultHandler {
     void onSuccess();
+
     void onFailure(int errorCode);
   }
 
@@ -112,13 +116,13 @@ public class RedditRestClient {
   /**
    * Used in 'sendRequest' to provide common handling of 'success' and 'failure' responses.
    * * For 'success':
-   *  - Logs up to 300 characters of JSON
-   *  - Retrieves parameters of interest from JSON and writes them into shared preferences
-   *  - Calls result handler 'resHandler.onSuccess(response)' passing JSON for further processing
+   * - Logs up to 300 characters of JSON
+   * - Retrieves parameters of interest from JSON and writes them into shared preferences
+   * - Calls result handler 'resHandler.onSuccess(response)' passing JSON for further processing
    * * For 'failure':
-   *  - Logs status code, JSON, header
-   *  - Calls result handler 'resHandler.onFailure(statusCode)' passing status code for further
-   *  processing
+   * - Logs status code, JSON, header
+   * - Calls result handler 'resHandler.onFailure(statusCode)' passing status code for further
+   * processing
    *
    * @param relUrl
    * @param respParNames
@@ -146,10 +150,11 @@ public class RedditRestClient {
             }
           }
           if (resHandler != null) resHandler.onSuccess(response);
-        }catch (JSONException e) {
+        } catch (JSONException e) {
           e.printStackTrace();
         }
       }
+
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
         String respStr = response.toString();
@@ -158,6 +163,7 @@ public class RedditRestClient {
             respStr.substring(0, maxLength - 1) + "..." : respStr));
         if (resHandler != null) resHandler.onSuccess(response);
       }
+
       @Override
       public void onFailure(int statusCode, Header[] headers, Throwable throwable,
                             JSONObject errorResponse) {
@@ -165,12 +171,14 @@ public class RedditRestClient {
         onFailureCommon(statusCode, headers,
             errorResponse == null ? null : errorResponse.toString());
       }
+
       @Override
       public void onFailure(int statusCode, Header[] headers, String responseString,
                             Throwable throwable) {
         //super.onFailure(statusCode, headers, responseString, throwable);
         onFailureCommon(statusCode, headers, responseString);
       }
+
       private void onFailureCommon(int statusCode, Header[] headers, String responseString) {
         String msg = "Failure status code: " + statusCode;
         if (responseString != null)
@@ -201,11 +209,13 @@ public class RedditRestClient {
         if (handler != null)
           handler.onSuccess(response);
       }
+
       @Override
       public void onSuccess(JSONArray response) {
         if (handler != null)
           handler.onSuccess(response);
       }
+
       @Override
       public void onFailure(int statusCode) {
         //Check for 2 conditions:
@@ -270,9 +280,11 @@ public class RedditRestClient {
           public void onSuccess(JSONObject response) {
             beginRetrievingUserName(null);
           }
+
           @Override
           public void onSuccess(JSONArray response) {
           }
+
           @Override
           public void onFailure(int statusCode) {
           }
@@ -308,9 +320,11 @@ public class RedditRestClient {
             if (handler != null)
               handler.onSuccess();
           }
+
           @Override
           public void onSuccess(JSONArray response) {
           }
+
           @Override
           public void onFailure(int statusCode) {
           }
@@ -328,16 +342,18 @@ public class RedditRestClient {
     mHttp.setBasicAuth(Constants.CLIENT_ID, "");
     RequestParams par = new RequestParams();
     par.put("token", accessToken);
-    par.put("token_type_hint","access_token");
+    par.put("token_type_hint", "access_token");
     sendRequest(RequestType.Post, false, "/api/v1/revoke_token", null, par, null,
         false /*tryToRefreshAccessToken*/, new JsonResultHandler() {
           @Override
           public void onSuccess(JSONObject response) {
             Util.removeSharedString(mContext, API_ACCESS_TOKEN);
           }
+
           @Override
           public void onSuccess(JSONArray response) {
           }
+
           @Override
           public void onFailure(int statusCode) {
           }
@@ -364,9 +380,11 @@ public class RedditRestClient {
             if (successHandler != null)
               successHandler.onSuccess();
           }
+
           @Override
           public void onSuccess(JSONArray response) {
           }
+
           @Override
           public void onFailure(int errorCode) {
           }
@@ -382,9 +400,11 @@ public class RedditRestClient {
             Intent intent = new Intent(Constants.MY_SUBREDDITS_RETRIEVED_EVENT);
             LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
           }
+
           @Override
           public void onSuccess(JSONArray response) {
           }
+
           @Override
           public void onFailure(int errorCode) {
           }
@@ -420,9 +440,11 @@ public class RedditRestClient {
             Intent intent = new Intent(Constants.SUBREDDITS_RETRIEVED_EVENT);
             LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
           }
+
           @Override
           public void onSuccess(JSONArray response) {
           }
+
           @Override
           public void onFailure(int errorCode) {
           }
@@ -461,9 +483,11 @@ public class RedditRestClient {
             Intent intent = new Intent(Constants.LINKS_RETRIEVED_EVENT);
             LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
           }
+
           @Override
           public void onSuccess(JSONArray response) {
           }
+
           @Override
           public void onFailure(int errorCode) {
           }
@@ -484,9 +508,11 @@ public class RedditRestClient {
             if (handler != null)
               handler.onSuccess();
           }
+
           @Override
           public void onSuccess(JSONArray response) {
           }
+
           @Override
           public void onFailure(int statusCode) {
             if (handler != null)
@@ -497,7 +523,7 @@ public class RedditRestClient {
 
   public void beginSearchRedditNames(final String query, final ResultHandler handler) {
     RequestParams par = new RequestParams();
-    par.put("exact", "false" ); //TODO: add 'exact=?' to App Settins
+    par.put("exact", "false"); //TODO: add 'exact=?' to App Settins
     par.put("include_over_18", Util.FilterNsfw(mContext) ? "false" : "true");
     par.put("query", query);
     sendRequest(RequestType.Post, true, "/api/search_reddit_names", getHeaders(), par,
@@ -508,9 +534,11 @@ public class RedditRestClient {
             if (handler != null)
               handler.onSuccess();
           }
+
           @Override
           public void onSuccess(JSONArray response) {
           }
+
           @Override
           public void onFailure(int statusCode) {
             if (handler != null)
@@ -525,7 +553,7 @@ public class RedditRestClient {
     RequestParams par = null;
     par = new RequestParams();
     par.put("depth", "5"); //TODO: add 'depth=?' to App Settings
-    par.put("limit","50"); //TODO: add 'limit=?' to App Settings
+    par.put("limit", "50"); //TODO: add 'limit=?' to App Settings
     sendRequest(RequestType.Get, true, relUrl, getHeaders(), par, null, true, handler);
   }
 }

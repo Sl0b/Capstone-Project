@@ -56,11 +56,13 @@ public class LinkWebViewActivity extends AppCompatActivity {
         }
         return false;
       }
+
       @Override
       public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
         Log.i(LOG_TAG, "onPageStarted, url: " + url);
       }
+
       @Override
       public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);

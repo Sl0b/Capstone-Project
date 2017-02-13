@@ -11,16 +11,19 @@ import com.example.sl0b.readitall.RedditContract.SubredditEntry;
 import com.example.sl0b.readitall.RedditContract.SubredditSearchEntry;
 import com.example.sl0b.readitall.RedditContract.UserEntry;
 
-public class RedditDbHelper  extends SQLiteOpenHelper {
+public class RedditDbHelper extends SQLiteOpenHelper {
   private static final int DATABASE_VERSION = 1;
   static final String DATABASE_NAME = "reddit.db";
+
   public RedditDbHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
   }
+
   @Override
   public void onOpen(SQLiteDatabase db) {
     super.onOpen(db);
   }
+
   @Override
   public void onCreate(SQLiteDatabase sqLiteDatabase) {
     final String SQL_CREATE_USERS_TABLE = "CREATE TABLE " + UserEntry.TABLE_NAME + " (" +
@@ -97,6 +100,7 @@ public class RedditDbHelper  extends SQLiteOpenHelper {
     sqLiteDatabase.execSQL(SQL_CREATE_LINKS_TABLE);
     sqLiteDatabase.execSQL(SQL_CREATE_CURR_LINKS_TABLE);
   }
+
   @Override
   public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
     sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + UserEntry.TABLE_NAME);

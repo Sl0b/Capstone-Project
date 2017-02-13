@@ -49,18 +49,23 @@ import com.example.sl0b.readitall.RedditContract.CurrLinkEntry;
 
 public class Util {
   public static final String LOG_TAG = Util.class.getSimpleName();
+
   public static SharedPreferences getSharedPreferences(Context c) {
     return c.getSharedPreferences(Constants.PREFERENCES_FILE, Context.MODE_PRIVATE);
   }
+
   public static String getSharedString(Context c, String key) {
     return getSharedPreferences(c).getString(key, null);
   }
+
   public static void setSharedString(Context c, String key, String val) {
     getSharedPreferences(c).edit().putString(key, val).commit();
   }
+
   public static void removeSharedString(Context c, String key) {
     getSharedPreferences(c).edit().remove(key).commit();
   }
+
   public static String getUserName(Context c) {
     return getSharedString(c, RedditRestClient.API_USER_NAME);
   }
@@ -73,11 +78,13 @@ public class Util {
   public static boolean isLoggedIn(Context c) {
     return getUserName(c) != null;
   }
+
   public static void setUser(Context c, String userName, String accessTkn, String refreshTkn) {
     setSharedString(c, RedditRestClient.API_USER_NAME, userName);
     setSharedString(c, RedditRestClient.API_ACCESS_TOKEN, accessTkn);
     setSharedString(c, RedditRestClient.API_REFRESH_TOKEN, refreshTkn);
   }
+
   public static void resetUser(Context c) {
     setUser(c, null, null, null);
   }
@@ -131,7 +138,7 @@ public class Util {
     ContentValues cv = new ContentValues();
     cv.put(SubredditEntry.COLUMN_USER_IS_SUBSCRIBER, (subscribe ? 1 : 0));
     res = 0 < cr.update(SubredditEntry.CONTENT_URI, cv, SubredditEntry.COLUMN_NAME + "=?",
-        new String[] {name});
+        new String[]{name});
     if (!res) {
       cv.put(SubredditEntry.COLUMN_NAME, name);
       res = null != cr.insert(SubredditEntry.CONTENT_URI, cv);
@@ -146,7 +153,7 @@ public class Util {
       ContentValues cv = new ContentValues();
       cv.put(AnonymSubscrEntry.COLUMN_NAME, name);
       return null != cr.insert(AnonymSubscrEntry.CONTENT_URI, cv);
-    }else {
+    } else {
       return 1 == cr.delete(AnonymSubscrEntry.CONTENT_URI,
           AnonymSubscrEntry.COLUMN_NAME + "=?",
           new String[]{name});
@@ -158,7 +165,7 @@ public class Util {
     try {
       JSONArray children = response.getJSONObject("data").getJSONArray("children");
       vec = new Vector<>(children.length());
-      for(int i = 0; i < children.length(); i++) {
+      for (int i = 0; i < children.length(); i++) {
         JSONObject child = children.getJSONObject(i).getJSONObject("data");
         ContentValues cv = new ContentValues();
         cv.put(SubredditEntry.COLUMN_ID,
@@ -183,7 +190,7 @@ public class Util {
       Log.e(LOG_TAG, e.getMessage(), e);
       e.printStackTrace();
     }
-    if ( vec != null && vec.size() > 0 ) {
+    if (vec != null && vec.size() > 0) {
       ContentValues[] cvs = new ContentValues[vec.size()];
       vec.toArray(cvs);
       c.getContentResolver()
@@ -226,7 +233,7 @@ public class Util {
       Log.e(LOG_TAG, e.getMessage(), e);
       e.printStackTrace();
     }
-    if ( vec != null && vec.size() > 0 ) {
+    if (vec != null && vec.size() > 0) {
       ContentValues[] cvs = new ContentValues[vec.size()];
       vec.toArray(cvs);
       cr.bulkInsert(SubredditSearchEntry.CONTENT_URI, cvs);
@@ -270,7 +277,7 @@ public class Util {
     try {
       JSONArray children = response.getJSONObject("data").getJSONArray("children");
       vec = new Vector<>(children.length());
-      for(int i = 0; i < children.length(); i++) {
+      for (int i = 0; i < children.length(); i++) {
         JSONObject child = children.getJSONObject(i).getJSONObject("data");
         ContentValues cv = new ContentValues();
         cv.put(LinkEntry.COLUMN_ID,
@@ -360,7 +367,7 @@ public class Util {
       Log.e(LOG_TAG, e.getMessage(), e);
       e.printStackTrace();
     }
-    if ( vec != null && vec.size() > 0 ) {
+    if (vec != null && vec.size() > 0) {
       ContentValues[] cvs = new ContentValues[vec.size()];
       vec.toArray(cvs);
       cr.bulkInsert(LinkEntry.CONTENT_URI, cvs);
@@ -375,7 +382,7 @@ public class Util {
   }
 
   public static int getCount(Context c, Uri uri, String selection, String[] selectionArgs) {
-    Cursor cursor = c.getContentResolver().query(uri, new String[] {"count(*)"},
+    Cursor cursor = c.getContentResolver().query(uri, new String[]{"count(*)"},
         selection, selectionArgs, null);
     if (cursor == null) {
       return -1;
@@ -398,7 +405,7 @@ public class Util {
   }
 
   public static String getRelativeTime(long timeSec) {
-    return DateUtils.getRelativeTimeSpanString(1000 * (long)timeSec).toString();
+    return DateUtils.getRelativeTimeSpanString(1000 * (long) timeSec).toString();
   }
 
   public static String getRelativeLocalTimeFromUTCtime(long timeSec) {
@@ -407,7 +414,7 @@ public class Util {
   }
 
   public static Point getDisplaySize(Context c) {
-    WindowManager wm = (WindowManager)c.getSystemService(Context.WINDOW_SERVICE);
+    WindowManager wm = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
     Display display = wm.getDefaultDisplay();
     Point size = new Point();
     display.getSize(size);
@@ -420,14 +427,13 @@ public class Util {
     return typedValue.getFloat();
   }
 
-  public static int getListPreferredItemHeight(Activity activity)
-  {
+  public static int getListPreferredItemHeight(Activity activity) {
     TypedValue value = new TypedValue();
     activity.getTheme().resolveAttribute(android.R.attr.listPreferredItemHeight, value, true);
     TypedValue.coerceToString(value.type, value.data);
     DisplayMetrics metrics = new DisplayMetrics();
     activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-    return (int)value.getDimension(metrics);
+    return (int) value.getDimension(metrics);
   }
 
   public static void printCursorToLog(String logTag, Cursor c) {
@@ -438,7 +444,7 @@ public class Util {
           s += c.getString(i) + "\t\t";
         }
         Log.d(logTag, s);
-      }while (c.moveToNext());
+      } while (c.moveToNext());
     }
   }
 
@@ -447,9 +453,8 @@ public class Util {
    * objects and then applies a list of zero or more tags to the entire range.
    *
    * @param content an array of character sequences to apply a style to
-   * @param tags the styled span objects to apply to the content
-   *        such as android.text.style.StyleSpan
-   *
+   * @param tags    the styled span objects to apply to the content
+   *                such as android.text.style.StyleSpan
    */
   private static CharSequence apply(CharSequence[] content, Object... tags) {
     SpannableStringBuilder text = new SpannableStringBuilder();

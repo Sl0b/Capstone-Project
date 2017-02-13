@@ -47,7 +47,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class MainActivity extends AppCompatActivity
     implements SelectUserDialog.SelectUserDialogListener,
-    LoaderManager.LoaderCallbacks<Cursor>, PopupMenu.OnMenuItemClickListener  {
+    LoaderManager.LoaderCallbacks<Cursor>, PopupMenu.OnMenuItemClickListener {
 
   public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
@@ -175,9 +175,10 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onDrawerSlide(View drawerView, float slideOffset) {
         }
+
         @Override
         public void onDrawerOpened(View drawerView) {
-          int id =  drawerView.getId();
+          int id = drawerView.getId();
           String name = "drawer";
           //Util.createUserSelectionDialogTestData(this);
           Bundle bundle = new Bundle();
@@ -186,17 +187,19 @@ public class MainActivity extends AppCompatActivity
           bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
           mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
         }
+
         @Override
         public void onDrawerClosed(View drawerView) {
         }
+
         @Override
         public void onDrawerStateChanged(int newState) {
         }
       });
     }
 
-    mSearchBox = (EditText)findViewById(R.id.search_box);
-    mStartOrCancelSearch = (ImageButton)findViewById(R.id.start_search);
+    mSearchBox = (EditText) findViewById(R.id.search_box);
+    mStartOrCancelSearch = (ImageButton) findViewById(R.id.start_search);
 
     //Register broadcast receiver for receiving notification when user name is retrieved from
     //Reddit.com to be able to update user name in navigation drawer header
@@ -208,14 +211,14 @@ public class MainActivity extends AppCompatActivity
     LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, filter);
 
     //Set up cursor adapter for list of subreddits on navigation drawer
-    mSubredditListView = (ListView)findViewById(R.id.subredditList);
+    mSubredditListView = (ListView) findViewById(R.id.subredditList);
     mSubrdtListAdapter = new SubredditListAdapter(this, null, 0);
     if (mSubredditListView != null)
       mSubredditListView.setAdapter(mSubrdtListAdapter);
     getLoaderManager().initLoader(SUBREDDIT_LIST_LOADER, null, this);
 
     //Set up cursor adapter for list of links on main_activity layout
-    mLinkListView = (ListView)findViewById(R.id.link_list);
+    mLinkListView = (ListView) findViewById(R.id.link_list);
     mLinkListAdapter = new LinkListAdapter(this, mLinkListView, null, 0);
     if (mLinkListView != null) {
       mLinkListView.setAdapter(mLinkListAdapter);
@@ -237,8 +240,8 @@ public class MainActivity extends AppCompatActivity
     //Set up 'Swipe-refresh' layout listeners / color scheme for refreshing indicator and
     //action on swipe-refreshSubreddits
     mSwipeRefreshLayoutSubreddit =
-        (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout_subreddit);
-    if (mSwipeRefreshLayoutSubreddit != null ) {
+        (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout_subreddit);
+    if (mSwipeRefreshLayoutSubreddit != null) {
       mSwipeRefreshLayoutSubreddit.setColorSchemeResources(R.color.colorAccent2,
           R.color.colorAccent, R.color.colorPrimary);
       mSwipeRefreshLayoutSubreddit.setOnRefreshListener(
@@ -251,7 +254,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     mSwipeRefreshLayoutLink = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout_link);
-    if (mSwipeRefreshLayoutLink != null ) {
+    if (mSwipeRefreshLayoutLink != null) {
       mSwipeRefreshLayoutLink.setColorSchemeResources(R.color.colorAccent2,
           R.color.colorAccent, R.color.colorPrimary);
       mSwipeRefreshLayoutLink.setOnRefreshListener(
@@ -287,6 +290,7 @@ public class MainActivity extends AppCompatActivity
   private ListView getLinkListView() {
     return mLinkListView;
   }
+
   /**
    * Listener responsible for closing onscreen keyboard and starting search once user clicked
    * on 'Start Search' button (on onscreen keyboard)
@@ -298,7 +302,7 @@ public class MainActivity extends AppCompatActivity
       if (actionId == EditorInfo.IME_ACTION_SEARCH) {
         // Hide virtual keyboard
         InputMethodManager imm =
-            (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(v.getWindowToken(),
             InputMethodManager.RESULT_UNCHANGED_SHOWN);
 
@@ -352,6 +356,7 @@ public class MainActivity extends AppCompatActivity
             setSubredditLoaderModeAndRestartLoaderIfRequired(true, null);
             updateSearchUI(true);
           }
+
           @Override
           public void onFailure(int errorCode) {
             //Show toast that search failed
@@ -498,8 +503,8 @@ public class MainActivity extends AppCompatActivity
   private void updateNavigationViewHeader() {
     NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
     if (nv == null) return;
-    TextView tvUserName = (TextView)nv.findViewById(R.id.loginOrUserName);
-    ImageButton btnLogInOrOut = (ImageButton)nv.findViewById(R.id.logInOrOut);
+    TextView tvUserName = (TextView) nv.findViewById(R.id.loginOrUserName);
+    ImageButton btnLogInOrOut = (ImageButton) nv.findViewById(R.id.logInOrOut);
     String userName = Util.getUserName(this);
     if (userName == null) {
       tvUserName.setText(getString(R.string.log_in));
@@ -539,6 +544,7 @@ public class MainActivity extends AppCompatActivity
   /**
    * In response to click on 'LogIn/LogOut' button on navigation drawer, opens dialog
    * for selecting user
+   *
    * @param v - not used
    */
   public void onLogInOrOutButtonPressed(View v) {
@@ -549,6 +555,7 @@ public class MainActivity extends AppCompatActivity
   /**
    * In response to click on button 'Action Overflow' (3 vertical dots) on navigation drawer,
    * pops up menu with one item 'Settings'
+   *
    * @param v
    */
   public void onDrawerSettingsButtonPressed(View v) {
@@ -561,6 +568,7 @@ public class MainActivity extends AppCompatActivity
   /**
    * Override from PopupMenu.OnMenuItemClickListener. Handles click on 'Refresh' item in
    * navigation drawer action overflow menu.
+   *
    * @param item
    * @return
    */
@@ -611,11 +619,11 @@ public class MainActivity extends AppCompatActivity
     ContentResolver cr = getContentResolver();
     Cursor cur;
     if (Util.isLoggedIn(this)) {
-      cur = cr.query(SubredditEntry.CONTENT_URI, new String[] {SubredditEntry.COLUMN_NAME},
-          SubredditEntry.COLUMN_USER_IS_SUBSCRIBER + "=?", new String[] {"1"}, null);
+      cur = cr.query(SubredditEntry.CONTENT_URI, new String[]{SubredditEntry.COLUMN_NAME},
+          SubredditEntry.COLUMN_USER_IS_SUBSCRIBER + "=?", new String[]{"1"}, null);
     } else {
       cur = cr.query(AnonymSubscrEntry.CONTENT_URI,
-          new String[] {AnonymSubscrEntry.COLUMN_NAME}, null, null, null);
+          new String[]{AnonymSubscrEntry.COLUMN_NAME}, null, null, null);
     }
 
     if (cur == null || cur.getCount() == 0 || !cur.moveToFirst()) {
@@ -648,10 +656,11 @@ public class MainActivity extends AppCompatActivity
 
   /**
    * Handle click on 'OK' button on 'Select User' dialog
+   *
    * @param dialog
    */
   public void onDialogPositiveClick(DialogFragment dialog) {
-    SelectUserDialog.Result res = ((SelectUserDialog)dialog).getResult();
+    SelectUserDialog.Result res = ((SelectUserDialog) dialog).getResult();
     if (res == SelectUserDialog.Result.NoChanges) {
       return;
     }
@@ -678,11 +687,12 @@ public class MainActivity extends AppCompatActivity
 
   /**
    * Handles results from Authorization activity
+   *
    * @param requestCode
    * @param resultCode
    * @param data
    */
-  protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (requestCode == RedditAuthorizationActivity.REQUEST_CODE_AUTHORIZATION) {
       if (resultCode != RESULT_OK) {
         Toast.makeText(MainActivity.this, getString(R.string.authoriz_failed),
@@ -698,6 +708,7 @@ public class MainActivity extends AppCompatActivity
 
   /**
    * Handle click on 'Cancel' button on 'Select User' dialog
+   *
    * @param dialog
    */
   public void onDialogNegativeClick(DialogFragment dialog) {

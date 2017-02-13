@@ -21,10 +21,13 @@ import java.util.Set;
 
 public class SelectUserDialog extends DialogFragment {
   private static final String LOG_TAG = SelectUserDialog.class.getSimpleName();
+
   public interface SelectUserDialogListener {
     void onDialogPositiveClick(DialogFragment dialog);
+
     void onDialogNegativeClick(DialogFragment dialog);
   }
+
   SelectUserDialogListener mListener;
 
   UserListAdapter mUserListAdapter;
@@ -40,6 +43,7 @@ public class SelectUserDialog extends DialogFragment {
     UserChangedToAnonymous,
     NewUser
   }
+
   Result mResult = Result.NoChanges;
 
   private final int POSITION_NOT_SET = Integer.MIN_VALUE;
@@ -121,7 +125,7 @@ public class SelectUserDialog extends DialogFragment {
           mSelectedUserCursorPosition = POSITION_ANONYMOUS;
         }
         cursorPosition++;
-      }while (mCursorUsers.moveToNext());
+      } while (mCursorUsers.moveToNext());
     }
   }
 
@@ -183,7 +187,7 @@ public class SelectUserDialog extends DialogFragment {
     if (removeIds != null) {
       for (int id : removeIds) {
         c.getContentResolver()
-            .delete(RedditContract.UserEntry.CONTENT_URI, "_id=" + id, null );
+            .delete(RedditContract.UserEntry.CONTENT_URI, "_id=" + id, null);
       }
     }
 
@@ -199,8 +203,7 @@ public class SelectUserDialog extends DialogFragment {
         //Was anonymous user and anonymous user is selected again
       else if (selUserName == null && mLoggedInUserName == null) {
         mResult = Result.NoChanges;
-      }
-      else {
+      } else {
         mResult = Result.UserChangedToAnonymous;
         Util.restoreAnonymousUserAccessToken(c);
       }
@@ -216,7 +219,7 @@ public class SelectUserDialog extends DialogFragment {
   private View.OnClickListener mOnUserNameClick = new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-      mSelectedUserCursorPosition = (int)v.getTag();
+      mSelectedUserCursorPosition = (int) v.getTag();
       mUserListAdapter.notifyDataSetChanged();
     }
   };
@@ -224,7 +227,7 @@ public class SelectUserDialog extends DialogFragment {
   private View.OnClickListener mOnUserRemoveClick = new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-      int cursorPosition = (int)v.getTag();
+      int cursorPosition = (int) v.getTag();
       if (cursorPosition == POSITION_NOT_SET) return;
       mRemoveUserCursorPositions.add(cursorPosition);
       setVisibleUserCursorPositions();
@@ -235,10 +238,12 @@ public class SelectUserDialog extends DialogFragment {
   private class UserListAdapter extends BaseAdapter {
     View.OnClickListener mUserNameClickListener;
     View.OnClickListener mUserRemoveClickListener;
+
     UserListAdapter(View.OnClickListener userClickLsnr, View.OnClickListener userRemoveLsnr) {
       mUserNameClickListener = userClickLsnr;
       mUserRemoveClickListener = userRemoveLsnr;
     }
+
     @Override
     public int getCount() {
       int count = mVisibleUserCursorPositions.size();
@@ -246,18 +251,25 @@ public class SelectUserDialog extends DialogFragment {
       count++; //'New user'
       return count;
     }
+
     @Override
-    public String getItem(int position) { return null; /*not used*/}
+    public String getItem(int position) {
+      return null; /*not used*/
+    }
+
     @Override
-    public long getItemId(int position) { return 0; /*not used*/}
+    public long getItemId(int position) {
+      return 0; /*not used*/
+    }
+
     @Override
     public View getView(int listPosition, View view, ViewGroup container) {
       if (view == null) {
         view = getActivity().getLayoutInflater().inflate(R.layout.user_list_item,
             container, false);
       }
-      RadioButton userRadio = (RadioButton)view.findViewById(R.id.userNameRadio);
-      ImageButton removeBtn = (ImageButton)view.findViewById(R.id.userNameRemove);
+      RadioButton userRadio = (RadioButton) view.findViewById(R.id.userNameRadio);
+      ImageButton removeBtn = (ImageButton) view.findViewById(R.id.userNameRemove);
       userRadio.setTag(POSITION_NOT_SET);
       removeBtn.setTag(POSITION_NOT_SET);
       userRadio.setOnClickListener(mUserNameClickListener);

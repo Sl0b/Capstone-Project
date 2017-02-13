@@ -48,7 +48,7 @@ public class LinkListAdapter extends CursorAdapter {
   @Override
   public void bindView(final View view, Context context, Cursor c) {
     mViewWidth = view.getWidth();
-    final ViewHolder vh = (ViewHolder)view.getTag();
+    final ViewHolder vh = (ViewHolder) view.getTag();
     String thumbUrl = c.getString(MainActivity.COL_THUMBNAIL);
     ViewGroup.LayoutParams pars = vh.thumb.getLayoutParams();
     if (thumbUrl != null && !thumbUrl.isEmpty() && thumbUrl.startsWith(Constants.HTTP_PREFIX)) {
@@ -67,7 +67,7 @@ public class LinkListAdapter extends CursorAdapter {
     vh.thumb.setLayoutParams(pars);
     vh.subreddit.setText(Util.getSubredditNameWithR(mActivity,
         c.getString(MainActivity.COL_SUBREDDIT)));
-    vh.when.setText(Util.getRelativeLocalTimeFromUTCtime((long)c.getInt(MainActivity
+    vh.when.setText(Util.getRelativeLocalTimeFromUTCtime((long) c.getInt(MainActivity
         .COL_CREATED_UTC)));
     vh.domain.setText(c.getString(MainActivity.COL_DOMAIN));
     vh.title.setText(c.getString(MainActivity.COL_TITLE));
@@ -87,10 +87,10 @@ public class LinkListAdapter extends CursorAdapter {
     // Image will have a square shape
     // 'image_height_to_view_height_ratio' is used for image to have some padding from top and
     // bottom of view
-    int listItemHeight = (int)(Util.getListPreferredItemHeight(mActivity) *
+    int listItemHeight = (int) (Util.getListPreferredItemHeight(mActivity) *
         Util.getFloatFromResources(mActivity.getResources(),
             R.dimen.links_list_item_height_multiplier));
-    int imgHeight = (int)(listItemHeight * ratio);
+    int imgHeight = (int) (listItemHeight * ratio);
     int imgWidth = imgHeight;
     View view = LayoutInflater.from(context).inflate(R.layout.link_list_item, parent, false);
     ViewHolder holder = new ViewHolder(view, listItemHeight, imgWidth, imgHeight);
@@ -113,6 +113,7 @@ public class LinkListAdapter extends CursorAdapter {
     RelativeLayout bottomRow;
     int imgWidth;
     int imgHeight;
+
     public ViewHolder(View view, int layoutHeight, int imgWidth, int imgHeight) {
       thumb = (ImageView) view.findViewById(R.id.link_thumb);
       thumbHolder = (FrameLayout) view.findViewById(R.id.link_thum_holder);
@@ -140,15 +141,15 @@ public class LinkListAdapter extends CursorAdapter {
 
     @Override
     public boolean onDown(MotionEvent event) {
-      Log.d(DEBUG_TAG,"onDown: " + event.toString());
+      Log.d(DEBUG_TAG, "onDown: " + event.toString());
       return true;
     }
 
     @Override
     public boolean onSingleTapConfirmed(MotionEvent e) {
 
-      int curPos = mListView.pointToPosition((int)e.getX(), (int)e.getY());
-      Cursor c = (Cursor)getItem(curPos);
+      int curPos = mListView.pointToPosition((int) e.getX(), (int) e.getY());
+      Cursor c = (Cursor) getItem(curPos);
       if (c != null) {
         Intent intent = new Intent(mActivity, LinkWithCommentsActivity.class);
         intent.putExtra(Constants.EXTRA_SUBREDDIT_NAME,
@@ -162,15 +163,16 @@ public class LinkListAdapter extends CursorAdapter {
     }
 
     int lastScrollEntrancePosition = ListView.INVALID_POSITION;
+
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
       if (e1 == null || e2 == null)
         return false;
       Log.d(DEBUG_TAG, "onScroll: " + e1.toString() + e2.toString());
-      if (Math.abs(distanceX) >  Math.abs(distanceY) &&
+      if (Math.abs(distanceX) > Math.abs(distanceY) &&
           e1.getX() > (mViewWidth * mViewWidthRatioIgnoreFromLeft)) {
-        int curPos = mListView.pointToPosition((int)e1.getX(), (int)e1.getY());
-        Cursor c = (Cursor)getItem(curPos);
+        int curPos = mListView.pointToPosition((int) e1.getX(), (int) e1.getY());
+        Cursor c = (Cursor) getItem(curPos);
         if (c != null) {
           String subreddit = c.getString(MainActivity.COL_SUBREDDIT);
           int subrdtPos = c.getInt(MainActivity.COL_POSITION);

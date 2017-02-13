@@ -129,6 +129,7 @@ public class SubredditListAdapter extends CursorAdapter {
         public void onSuccess() {
           makeToast(null, String.format(successMsg, subrdtName));
         }
+
         @Override
         public void onFailure(int errorCode) {
           makeToast(v, String.format(failureMsg, errorCode));
@@ -153,10 +154,11 @@ public class SubredditListAdapter extends CursorAdapter {
 
   /**
    * Shows toast below the view if the view is not null, otherwise shows in default location
+   *
    * @param view
    * @param text
    */
-  public void makeToast(View view, String text){
+  public void makeToast(View view, String text) {
     if (mToast != null) mToast.cancel();
     mToast = Toast.makeText(mActivity, text, Toast.LENGTH_SHORT);
     if (view != null) {
@@ -174,6 +176,7 @@ public class SubredditListAdapter extends CursorAdapter {
   static class ViewHolder {
     ImageView icon;
     TextView text;
+
     public ViewHolder(View view) {
       icon = (ImageView) view.findViewById(R.id.toggle);
       text = (TextView) view.findViewById(R.id.subredditName);

@@ -3,5 +3,5 @@
         android:width="1dp"
         android:dashGap="10px"
         android:dashWidth="2px"
-        android:color="@color/colorLinkTitleBorderBg" />
+        android:color="@color/colorLinkTitleBorderBg"/>
 </shape>
