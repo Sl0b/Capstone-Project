@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "449349546176",
+    "firebase_url": "https://readitall-129e1.firebaseio.com",
+    "project_id": "readitall-129e1",
+    "storage_bucket": "readitall-129e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:449349546176:android:dd119fcb394f2e73",
+        "android_client_info": {
+          "package_name": "com.example.sl0b.readitall"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "449349546176-v3hg6insmv5dv6lngsmffck0mdoa9340.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sl0b.readitall",
+            "certificate_hash": "D8BA5B91465E581C351DA9E37314D4C309E320D8"
+          }
+        },
+        {
+          "client_id": "449349546176-htectpacoaoo7jnc3ra85v8uvbaemquf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAF_uyYpPgC3ynmXn26rwZOoKNEjHvlKPc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "449349546176-htectpacoaoo7jnc3ra85v8uvbaemquf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
