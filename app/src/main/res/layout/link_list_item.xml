@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal"
-              android:gravity="center_vertical"
-              android:paddingTop="2dp"
-              android:paddingBottom="2dp"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp">
     <!--THUMBNAIL IMAGE-->
     <FrameLayout
         android:id="@+id/link_thum_holder"
@@ -19,8 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:src="@drawable/photo_placeholder"
-            android:layout_gravity="center"
-            />
+            android:layout_gravity="center" />
     </FrameLayout>
     <!--RIGHT PART-->
     <RelativeLayout
@@ -46,8 +44,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_margin="4dp"
                 android:singleLine="true"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                />
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <TextView
                 android:id="@+id/link_when"
@@ -57,8 +54,7 @@
                 android:layout_toRightOf="@id/link_subreddit"
                 android:layout_margin="4dp"
                 android:singleLine="true"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                />
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <TextView
                 android:id="@+id/link_domain"
@@ -71,8 +67,7 @@
                 android:layout_margin="4dp"
                 android:singleLine="true"
                 android:ellipsize="end"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                />
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         </RelativeLayout>
 
@@ -87,7 +82,7 @@
             android:layout_marginEnd="4dp"
             android:layout_height="2dp"
             android:layout_below="@+id/link_top_row"
-            android:background="@drawable/dashed_line_shape"/>
+            android:background="@drawable/dashed_line_shape" />
 
         <TextView
             android:id="@+id/link_title"
@@ -102,8 +97,7 @@
             android:maxLines="3"
             android:ellipsize="end"
             android:padding="1sp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <View
             android:id="@+id/bottom_divider"
@@ -114,7 +108,7 @@
             android:layout_marginEnd="4dp"
             android:layout_height="2dp"
             android:layout_above="@+id/link_bottom_row"
-            android:background="@drawable/dashed_line_shape"/>
+            android:background="@drawable/dashed_line_shape" />
 
         <!-- BOTTOM ROW -->
         <RelativeLayout
@@ -133,8 +127,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_margin="4dp"
                 android:singleLine="true"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                />
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <TextView
                 android:id="@+id/link_score"
@@ -144,8 +137,7 @@
                 android:layout_toRightOf="@id/link_num_comments"
                 android:layout_margin="4dp"
                 android:singleLine="true"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                />
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
 
             <TextView
@@ -159,8 +151,7 @@
                 android:layout_margin="4dp"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                />
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <TextView
                 android:id="@+id/link_position"
@@ -169,8 +160,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_margin="4dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                />
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         </RelativeLayout>
 
